@@ -2,6 +2,7 @@ package proxyController;
 
 import java.io.IOException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -36,16 +37,18 @@ public class ProxyController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher dispat = req.getRequestDispatcher("index.jsp");        
+        String backendName = req.getParameter("backendName");
+
         if (req.getParameter("action") == null && req.getParameter("backendName") == null) {
             req.setAttribute("backendAndNodes", proxyCoreService.allBackendNodes());
-        }
-        String backendName = req.getParameter("backendName");
-        if (req.getParameter("action").equals("delete")) {
+        }else if (req.getParameter("action").equals("delete")) {
             String nodeName = req.getParameter("nodeName");
             proxyCoreService.deleteNode(backendName, nodeName);
-        }
-        if (req.getParameter("action") == null) {
+        }else if (req.getParameter("action") == null) {
             req.setAttribute("clusters", proxyCoreService.getBackendNodes(backendName));
         }
+
+        dispat.forward(req, resp);
     }
 }

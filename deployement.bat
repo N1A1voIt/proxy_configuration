@@ -6,7 +6,7 @@ set WEB_DIR=D:/JASON/programmes/JSP/proxy_configuration/web
 set LIB_DIR=D:/JASON/programmes/JSP/proxy_configuration/lib
 set XML_FILE=D:/JASON/programmes/JSP/proxy_configuration/web.xml
 set SRC_DIR=D:/JASON/programmes/JSP/proxy_configuration/src
-set APPLICATION=supermarche2
+set APPLICATION=proxy-configuration
 set DEPLOYMENT_DIR=C:/Program Files/Apache Software Foundation/Tomcat 10.1/webapps/
 
 @REM suppression du dossier temp
@@ -18,6 +18,8 @@ mkdir "%TEMP_DIR%/WEB-INF"
 mkdir "%TEMP_DIR%/WEB-INF/classes"
 mkdir "%TEMP_DIR%/WEB-INF/lib"
 
+@REM copie du fichier haproxy.cfg
+copy "haproxy.cfg" "%TEMP_DIR%/WEB-INF/classes/"
 
 @REM copie des dossier
 xcopy /E "%WEB_DIR%" "%TEMP_DIR%"  
